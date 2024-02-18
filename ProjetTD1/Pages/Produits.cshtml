@@ -1,0 +1,25 @@
+﻿@page
+@model ProjetTD1.Pages.ProduitsModel
+@{
+   
+    <h3> Le nombre de produits est @Model.Products.Count </h3>
+    <table>
+            <tr>
+                <th>ProductName</th>
+                <th>Marque</th>
+                <th>CategoryName</th>
+                <th>NBCommandesPasses</th>
+                <th>QteCommandée</th>
+            </tr>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.ProductName</td>
+                    <td>@product.Brand.BrandName</td>
+                    <td>@product.Category.CategoryName</td>
+                    <td>@product.OrderItems.Count</td>
+                    <td>@product.OrderItems.Sum(oi => oi.Quantity)</td>
+                </tr>
+            }
+    </table>
+}

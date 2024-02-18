@@ -1,0 +1,32 @@
+﻿@page
+@model ProjetTD1.Pages.ClientsModel
+@{
+    if (Model.Customers.Count > 1000)
+    {
+        <h3>Le nomber de client est @Model.Customers.Count</h3>
+        <table>
+            <tr>
+                <th>Fname</th>
+                <th>Lname</th>
+                <th>mail</th>
+                <th>Pending</th>
+                <th>Processing</th>
+                <th>Rejected</th>
+                <th>Completed</th>
+            </tr>
+            @foreach (var customer in Model.Customers)
+            {
+                <tr>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.Orders.Count(o=> o.OrderStatus == 1)</td>
+                    <td>@customer.Orders.Count(o=> o.OrderStatus == 2)</td>
+                    <td>@customer.Orders.Count(o=> o.OrderStatus == 3)</td>
+                    <td>@customer.Orders.Count(o=> o.OrderStatus == 4)</td>
+                </tr>
+            }
+        </table>
+        
+    }
+}
