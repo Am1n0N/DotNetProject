@@ -1,0 +1,51 @@
+﻿@page
+@model ProjetTD1.Pages.StaffModel
+@{
+   
+<h3> Le nombre de staff est @Model.workers.Count </h3>
+    <table>
+        <tr>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Phone</th>
+            <th>Active</th>
+            <th>Email</th>
+            <th>StoreName</th>
+            <th>ManagerName</th>
+            <th>IsManager</th>
+            <th>NbEmplSupervisés</th>
+            <th>Sales</th>
+        </tr>
+        @foreach (var worker in Model.workers)
+        {
+            <tr>
+                <td>@worker.FirstName</td>
+                <td>@worker.LastName</td>
+                <td>@worker.Phone</td>
+                <td>@worker.Active</td>
+                <td>@worker.Email</td>
+                <td>@worker.Store.StoreName</td>
+                @if (worker.ManagerId != null)
+                {
+                    <td> @worker.Manager.FirstName @worker.Manager.LastName </td>
+                }
+                else
+                {
+                    <td>PAS DE GERANT</td>
+                }
+                @if (worker.InverseManager.Count >= 1)
+                {
+                    <td>true</td>
+                }
+                else
+                {
+                    <td>false</td>
+                }
+                <td>@worker.InverseManager.Count</td>
+                <td>@worker.Orders.Sum(Ord => Ord.OrderItems.Sum(ot => ot.Product.ListPrice * ot.Quantity - (ot.Product.ListPrice * ot.Quantity * ot.Discount)))</td>
+            </tr>
+            
+
+        }
+    </table>
+}

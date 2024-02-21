@@ -10,6 +10,12 @@
                 <th>CategoryName</th>
                 <th>NBCommandesPasses</th>
                 <th>QteCommandée</th>
+                <th>QteStock</th>
+                @foreach(var store in Model.Stores)
+            {
+                <th>@store.StoreName</th>
+            }
+            
             </tr>
             @foreach (var product in Model.Products)
             {
@@ -19,6 +25,19 @@
                     <td>@product.Category.CategoryName</td>
                     <td>@product.OrderItems.Count</td>
                     <td>@product.OrderItems.Sum(oi => oi.Quantity)</td>
+                    <td>@product.Stocks.Sum(S => S.Quantity)</td>
+                @foreach (var store in Model.Stores)
+                {
+                    @foreach (var stock in product.Stocks)
+                    {
+                        @if (stock.Store.StoreId == store.StoreId)
+                        {
+                            <td>@stock.Quantity</td>
+                        }
+                    
+                    }
+                                  
+                }                   
                 </tr>
             }
     </table>

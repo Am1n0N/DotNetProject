@@ -9,13 +9,18 @@ namespace ProjetTD1.Pages
     {
         private MyDbContext context = new MyDbContext();
         public List<Product> Products { get; set; }
+
+        public List<Store> Stores { get; set; }
+     
         public void OnGet()
         {
-            //afficher productName, Marque(nom), CategoryName,, NBCommandesPasses
-            Products = context.Products.Include(a =>a.Brand).Include(a =>a.Category).Include(a =>a.OrderItems).ToList();
-            //Ajouter une colonne à la page produits qui permet d'afficher pour chaque produit la qté commandée use sum
-            
+           
+            Products = context.Products.Include(a =>a.Brand).Include(a =>a.Category).Include(a =>a.OrderItems)
+                .Include(a =>a.Stocks).ThenInclude(st => st.Store)
+                .ToList();
 
+            Stores = context.Stores.ToList();
+            
         }
     }
 }
